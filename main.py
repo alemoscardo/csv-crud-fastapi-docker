@@ -38,6 +38,12 @@ def get_items():
     df = read_csv()
     return df.to_dict(orient="records")
 
+@app.get("/items/count")
+def get_count():
+    df = read_csv()
+    return {"count": len(df)}
+
+
 @app.get("/items/{id}", response_model=Record)
 def get_item(id: int):
     df = read_csv()
@@ -63,8 +69,3 @@ def delete_item(id: int):
     df = df[df["id"] != id]
     write_csv(df)
     return {"message": "Item deleted successfully"}
-
-@app.get("/items/count")
-def get_count():
-    df = read_csv()
-    return {"count": len(df)}
